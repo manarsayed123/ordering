@@ -31,7 +31,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ordering.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -99,7 +97,7 @@ JWT_AUTH = {
 
     'JWT_EXPIRATION_DELTA': timedelta(days=2),
     'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA':timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     'JWT_AUTH_COOKIE': None,
 
@@ -122,10 +120,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PARSER_CLASSES': (
-            'rest_framework.parsers.JSONParser',
-            'rest_framework.parsers.FormParser',
-            'rest_framework.parsers.MultiPartParser',
-        ),
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ),
 
 }
 
@@ -147,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -161,7 +158,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -171,3 +167,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+###### Fixer Url ######
+CURRENCY_CONVERTER_URL = f"http://data.fixer.io/api/latest?access_key={env('FIXER_API_KEY',default=' ')}"
+DEFAULT_CURRENCY = 'EUR'
