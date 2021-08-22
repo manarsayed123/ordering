@@ -2,6 +2,8 @@ from django.db import models, IntegrityError
 from django.contrib.auth.models import User
 
 # Create your models here.
+from django.db.models import Sum, F
+
 from order.models import Order
 from product.models import Product
 
@@ -23,7 +25,10 @@ class ShopCart(models.Model):
         return self
 
     def to_order(self, order):
+        total_order_price = self.items.aggregate(sum=Sum(F('product__price') * F('quantity')))['sum']
         self.items.update(order=order, shop_cart=None)
+        order.total_price = total_order_price
+        order.save()
         return self
 
 

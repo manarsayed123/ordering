@@ -15,12 +15,15 @@ valid_currencies = ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG
                     'VUV', 'WST', 'XAF', 'XAG', 'XAU', 'XCD', 'XDR', 'XOF', 'XPF', 'YER', 'ZAR', 'ZMK', 'ZMW', 'ZWL']
 
 
-def get_currency_rate(currency_sympol):
-    response = requests.get(settings.CURRENCY_CONVERTER_URL
-                            )
-    json_response = response.json()
-    if currency_sympol == settings.DEFAULT_CURRENCY:
-        return 1
-    if json_response['success']:
-        return json_response['rates'][currency_sympol]
-    return 1
+def get_currency_rate(currency_symbol):
+    try:
+        response = requests.get(settings.CURRENCY_CONVERTER_URL
+                                )
+        json_response = response.json()
+        if currency_symbol == settings.DEFAULT_CURRENCY:
+            return {"currency_symbol": settings.DEFAULT_CURRENCY, "currency_rate": 1}
+
+        if json_response['success']:
+            return {"currency_symbol": currency_symbol, "currency_rate": json_response['rates'][currency_symbol]}
+    except:
+        return {"currency_symbol": settings.DEFAULT_CURRENCY, "currency_rate": 1}

@@ -20,4 +20,5 @@ class Order(models.Model):
     status = models.CharField(choices=order_status, max_length=35, default=IN_PROCESS)
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.FloatField(default=0)
+    user_currency = models.CharField(max_length=10)
     # contact_phone_number = PhoneNumberField(null=True,blank=True)

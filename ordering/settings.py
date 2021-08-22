@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-x3lp5!=b9u@en6d0(*@(m0yz1e0tbx#4*_#(koa=n4tma!))x5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -85,14 +85,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ordering.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db("DJANGO_DATABASE_URL"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 REST_USE_JWT = True
-
+ALLOWED_HOSTS = []
 JWT_AUTH = {
 
     'JWT_EXPIRATION_DELTA': timedelta(days=2),
@@ -124,6 +125,14 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/minute',
+        'user': '5/minute'
+    }
 
 }
 

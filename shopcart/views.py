@@ -4,11 +4,17 @@ from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
+from ordering.custom_permission import IsNormalUser
 from shopcart.serializers import AddProductSerializer, ShopCartSerializer
 
 
 class ShopCartProcessing(GenericAPIView):
     serializer_class = AddProductSerializer
+    permission_classes = [IsNormalUser]
+    """
+    api to make mehod add and get to shopcart 
+    i did it to enable user to add multible item to his shopcart
+    """
 
     def get(self, request):
         return Response(ShopCartSerializer(request.user.user_cart_related).data)
