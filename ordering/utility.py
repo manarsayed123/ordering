@@ -27,3 +27,14 @@ def get_currency_rate(currency_symbol):
             return {"currency_symbol": currency_symbol, "currency_rate": json_response['rates'][currency_symbol]}
     except:
         return {"currency_symbol": settings.DEFAULT_CURRENCY, "currency_rate": 1}
+
+def mocked_requests_get(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.json_data = json_data
+            self.status_code = status_code
+
+        def json(self):
+            return self.json_data
+
+    return MockResponse({"success": {'rates'['USD']: 1}}, 200)

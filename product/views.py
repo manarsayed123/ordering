@@ -29,7 +29,10 @@ class ListPublishedProductView(ListAPIView):
     permission_classes = [IsNormalUser]
     filter_backends = [DjangoFilterBackend]
     filter_fields = ['name', 'price']
-    """api to list only published products available for normal user {authenticated users but not staff users}"""
+    """
+    api to list only published products available for normal 
+    user {authenticated users but not staff users}
+    """
 
     def get_serializer_context(self):
         context = super(ListPublishedProductView, self).get_serializer_context()
